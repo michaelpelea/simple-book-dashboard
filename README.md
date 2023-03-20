@@ -15,9 +15,9 @@ This should get all dependencies setup for the project to be one step ready to r
 After installation of the modules, run the command
 
 ```bash
-yarn prisma migrate
+yarn prisma migrate dev
 # or
-npx prisma migrate
+npx prisma migrate dev
 ```
 
 This command should get all the schema set on `prisma/schema.prisma` and have it ready on the `PrismaClient()`. I used `prisma` as the DB of website.
@@ -114,10 +114,19 @@ Function re-usability. On the sections, there are a lot of code that can be re-u
 
 Test cases. From my experience, I have only used Jest. I am not a master of it but I am knowledgeable on how to use it. I plan of using this on the components to ensure UI styling is not changed from other changes via snapshots. Consistent output by using mocks and spy on the functionalities inside of it. This can also be applied on the api folders under `services`.
 
+User Restriction. Right now, users can perform CRUD on books as long as it's category falls under the categories set to role `USER`. Having a set of access rights would perfectly make it's restriction tighter and not allowing the said user to freely do anything with the categories assigned to him/her. My idea would be something like this:
+
+```bash
+Category: Sports
+          Read    Write    Update     Delete
+```
+
+Where the CRUD operations are checkboxes.
+
 ## Timeline
 
 The said project could be the MVP or let's say version 1. On the following days, masking can be implemented with proper improvements on the code. Following week should be well tested with Jest.
 
 ## How long did I work on this?
 
-I started on it last Saturday. If I were to total my working hours deducting my time to pause because it's weekend, I believe it's 1.5 days.
+I started on it last Saturday. If I were to total my working hours deducting my time to pause because it's weekend, I believe it's 2 days.
