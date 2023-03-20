@@ -5,7 +5,8 @@ const { createContext, useCallback, useState } = require('react')
 const DashboardContext = createContext()
 
 /**
- * Ideally we can use a state management tool for this but
+ * Context provider for the dashboard where API is stored. It is set here to allow other components
+ * to refetch the dashboard data after mutation (Books)
  */
 export const DashboardContextProvider = ({ children }) => {
   const [counts, setCounts] = useState({

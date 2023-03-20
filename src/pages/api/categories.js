@@ -19,6 +19,7 @@ const categoriesHandler = async (req, res) => {
 
   if (req.method === 'GET') {
     try {
+      // Get all categories
       const categories = await prisma.category.findMany()
 
       return res.status(200).json({
@@ -35,6 +36,8 @@ const categoriesHandler = async (req, res) => {
     // Adds new record on user
     try {
       const { name = '' } = parsedBody
+
+      // Add the category
       const category = await prisma.category.create({
         data: {
           name,

@@ -2,6 +2,9 @@ const { default: PATHS } = require('../utils/paths')
 
 const API = PATHS.API.USERS
 
+/**
+ * Responsible on calling API specifically for users
+ */
 export const getUsers = async () => fetch(API()).then((res) => res.json())
 
 export const addUser = async ({ username, password, firstName, lastName, role }) =>

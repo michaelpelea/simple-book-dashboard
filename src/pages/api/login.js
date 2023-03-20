@@ -31,6 +31,7 @@ const loginHandler = async (req, res) => {
         })
 
         if (user) {
+          // If user has been validated, set the cookie on the response and set expiration to 1 hr
           setCookie(COOKIES.TOKEN, user.id, { req, res, sameSite: 'lax', maxAge: 3600 }) //setting max age to 1 hour
 
           return res.status(200).json({

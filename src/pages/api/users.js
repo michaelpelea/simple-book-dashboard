@@ -87,7 +87,7 @@ const usersHandler = async (req, res) => {
         categoryIds = [],
       } = JSON.parse(req.body) ?? {}
 
-      // Call user categories to cross reference with the categoryIds
+      // Call user categories to cross check with the categoryIds
       const userCategories = await prisma.user.findFirst({
         where: { id },
         select: {
@@ -95,16 +95,17 @@ const usersHandler = async (req, res) => {
         },
       })
 
+      // Mapp the category ids to number format
       const mappedCategoryIds = categoryIds?.length ? categoryIds.map((ci) => Number(ci)) : []
 
+      // Mapp the category ids from user data to number format
       const userCategoryIds = userCategories?.categories?.map((c) => Number(c.id)) ?? []
       // Get matching values from user categories and newly submitted category Ids
       const disconnectCategories = userCategoryIds.length
         ? userCategoryIds.filter((c) => mappedCategoryIds.indexOf(c) === -1)
         : []
 
-      // First we clean the categories if categoryIds is available because overwriting does not work with prisma
-      // update with foreign keys
+      // First we clean the categories if disconnectCategories is available because overwriting does not work
       await prisma.user.update({
         where: { id },
         data: {
@@ -128,6 +129,7 @@ const usersHandler = async (req, res) => {
         select: USER_PROPERTIES,
       })
 
+      // Then we add the added category Ids from user
       if (mappedCategoryIds.length) {
         await prisma.user.update({
           where: { id },

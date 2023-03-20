@@ -1,5 +1,8 @@
 import { Transition } from '@headlessui/react'
 
+/**
+ * Combined with popup components that adds a bit of animation on show of the child element
+ */
 const TransitionFade = ({ isShown, children, className = '', beforeLeave, afterLeave }) => (
   <Transition
     show={isShown}

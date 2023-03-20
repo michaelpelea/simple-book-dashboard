@@ -1,5 +1,8 @@
 const { default: PATHS } = require('../utils/paths')
 
+/**
+ * Responsible on calling API specifically for books
+ */
 const API = PATHS.API.BOOKS
 
 export const getBooks = async () => fetch(API()).then((res) => res.json())

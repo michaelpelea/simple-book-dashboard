@@ -2,8 +2,14 @@ import { ExclamationCircleIcon } from '@heroicons/react/20/solid'
 import { forwardRef } from 'react'
 import { cx } from '@/services/utils'
 
+/**
+ * Wrapper for the field elements combined together
+ */
 export const FieldGroup = ({ children, className }) => <div className={className}>{children}</div>
 
+/**
+ * Show the label of the input
+ */
 export const FieldLabel = ({ name, title }) => (
   <div className="mb-1 flex">
     <label htmlFor={name} className="block text-sm font-medium text-paragraph">
@@ -11,6 +17,10 @@ export const FieldLabel = ({ name, title }) => (
     </label>
   </div>
 )
+
+/**
+ * Show the error from the yup
+ */
 export const FieldError = ({ title, description }) => (
   <div className="pt-1 text-sm text-red-600">
     {title && <h3>{title}</h3>}
@@ -18,6 +28,9 @@ export const FieldError = ({ title, description }) => (
   </div>
 )
 
+/**
+ * Field input with yup integration
+ */
 export const FieldInput = forwardRef(function FieldInputRef(
   { name, type = 'text', methods, className, ...rest },
   ref
@@ -76,6 +89,10 @@ export const RadioField = forwardRef(function RadioFieldRef(
   )
 })
 
+/**
+ * Returns a radio input field that is wrapped with yup resolver function
+ * @param {Array} values - [[x, y]] where x is the label of the field and y is the value of the radio
+ */
 export const CheckboxField = forwardRef(function CheckboxFieldRef(
   { label, values = [], name, className, methods, ...rest },
   ref
@@ -111,6 +128,9 @@ export const CheckboxField = forwardRef(function CheckboxFieldRef(
   )
 })
 
+/**
+ * Component that is responsible on working with the useForm hook methods. Make sure this is inside the form
+ */
 export const Field = forwardRef(function FieldRef(
   { label, name, type = 'text', methods, ...rest },
   ref
@@ -133,6 +153,9 @@ export const Field = forwardRef(function FieldRef(
   )
 })
 
+/**
+ * Form component that wraps form into a re-usable component for singular css styling
+ */
 export const Form = ({ className, ...rest }) => (
   <form {...rest} className={cx('space-y-4', className)} />
 )

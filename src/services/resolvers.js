@@ -2,6 +2,10 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { ROLES } from './constants'
 
+/**
+ * This file holds the resolver where it dictates the rule or security of a particular input
+ * At the same time, this file includes the said form default values
+ */
 export const LOGIN_SCHEMA_RESOLVER = yupResolver(
   yup
     .object({

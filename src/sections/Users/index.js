@@ -59,16 +59,25 @@ const Users = () => {
     }
   }, [setData, setLoading, setMessage])
 
+  /**
+   * Opens modal with type create
+   */
   const onClickCreateUser = useCallback(
     () => setModal({ show: true, type: ACTION_METHOD.CREATE, data: null }),
     []
   )
 
+  /**
+   * Opens modal with type edit
+   */
   const onEditButtonClick = useCallback(
     (user) => setModal({ show: true, type: ACTION_METHOD.UPDATE, data: user }),
     []
   )
 
+  /**
+   * Closes modal
+   */
   const onExitModal = useCallback(() => setModal({ show: false, type: '', data: null }), [])
 
   /**

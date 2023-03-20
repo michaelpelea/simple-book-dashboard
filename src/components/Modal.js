@@ -3,6 +3,14 @@ import { PrimaryButton } from './Buttons'
 import { Form } from './Forms'
 import Message from './Message'
 
+/**
+ * Modal component
+ * @param {Component} children - child components to be rendered inside of it
+ * @param {Function} onClose - Callback function on close of the modal
+ * @param {String} title - Displays title of the component
+ * @param {String} className - Styling css to extend or overwrite modal content default style
+ * @param {String} containerClassName - Styling css to extend or overwrite container default style
+ */
 const Modal = ({ title, onClose, children, className = '', containerClassName = '' }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
@@ -27,6 +35,14 @@ const Modal = ({ title, onClose, children, className = '', containerClassName = 
 
 /**
  * Re-uses modal for confirmation such as delete
+ * @param {Component} children - child components to be rendered inside of it
+ * @param {String} message - Displays string re: error of a particular action
+ * @param {Boolean} isLoading - Loading indicator while waiting for data
+ * @param {Boolean} disabled - Disables the component to ensure user does not touch the element while doing something
+ * @param {Function} onConfirm - Callback function on delete
+ * @param {String} title - Displays title of the component
+ * @param {String} className - Styling css to extend or overwrite modal content default style
+ * @param {String} containerClassName - Styling css to extend or overwrite container default style
  */
 export const DeleteModal = ({ children, message, disabled, isLoading, onConfirm, ...props }) => (
   <Modal {...props}>
@@ -40,6 +56,15 @@ export const DeleteModal = ({ children, message, disabled, isLoading, onConfirm,
 
 /**
  * Re-uses modal but wraps content with form
+ * @param {Component} children - child components to be rendered inside of it
+ * @param {String} message - Displays string re: error of a particular action
+ * @param {Function} methods - This is passed from the return result of the useForm hook
+ * @param {Boolean} isLoading - Loading indicator while waiting for data
+ * @param {Boolean} disabled - Disables the component to ensure user does not touch the element while doing something
+ * @param {Function} onFormSubmit - Callback function on form submit
+ * @param {String} title - Displays title of the component
+ * @param {String} className - Styling css to extend or overwrite modal content default style
+ * @param {String} containerClassName - Styling css to extend or overwrite container default style
  */
 export const FormModal = ({
   children,

@@ -1,6 +1,13 @@
 import { cx } from '@/services/utils'
 import Spinner from './Spinner'
 
+/**
+ * Primary button used on the page
+ * @param {Component} children - child components to be rendered inside of it
+ * @param {String} title - Displays title or button text
+ * @param {String} className - Styling css to extend or overwrite button default style
+ * @param {Boolean} isLoading - Loading indicator while waiting for data
+ */
 export const PrimaryButton = ({ title, className, isLoading, children, ...rest }) => (
   <button
     type="button"

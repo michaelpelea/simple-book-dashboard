@@ -4,6 +4,10 @@ const BUTTON_CLASS = 'outline-none border-none cursor-pointer'
 /**
  * Card display component used on displaying records of the section
  * If children is present, replace rows
+ * @param {Component} children - child components to be rendered inside of it
+ * @param {Function} onDeleteButtonClick - Callback function on click of delete button
+ * @param {Function} onEditButtonClick - Callback function on click of edit button
+ * @param {Array} rows - [[label, value]] - Array within an array where first value holds label and the second is the value
  */
 const Card = ({ onEditButtonClick, onDeleteButtonClick, rows = [], children }) => (
   <div className="flex flex-col space-y-2 rounded-md bg-white p-4 shadow-lg">

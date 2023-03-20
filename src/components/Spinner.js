@@ -25,6 +25,11 @@ export const SpinnerSvg = ({
     />
   </svg>
 )
+
+/**
+ * Component that shows spinner to indicate a loading state
+ * @param {Int} size - adjusts the size of the spinner
+ */
 const Spinner = ({ className, ...props }) => (
   <div className={cx('flex h-full items-center justify-center', className)}>
     <div role="status">

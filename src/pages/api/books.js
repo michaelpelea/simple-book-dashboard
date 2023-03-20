@@ -37,18 +37,21 @@ const booksHandler = async (req, res) => {
       // If has query, then we check purpose
       if (queryId) {
         if (queryId === 'total') {
+          // Get total count of not deleted books
           books = await prisma.book.count({
             where: {
               isDeleted: false,
             },
           })
         } else if (queryId === 'totalDeleted') {
+          // Get total count of deleted books
           books = await prisma.book.count({
             where: {
               isDeleted: true,
             },
           })
         } else if (queryId === 'totalPerAuthor') {
+          // Get all books grouped by auther and books that are not yet deleted
           books = await prisma.book.groupBy({
             by: ['author'],
             where: {
@@ -60,6 +63,7 @@ const booksHandler = async (req, res) => {
           })
         }
       } else {
+        // Get all books that are not deleted
         books = await prisma.book.findMany({
           where: { isDeleted: false },
           select: BOOK_PROPERTIES,
@@ -99,6 +103,8 @@ const booksHandler = async (req, res) => {
         },
       })
 
+      // Once new book is added, retrieve the said book as the return result of the create func
+      // Does not return the proeprties we need
       const updatedBook = await prisma.book.findFirst({
         where: { id: book.id },
         select: BOOK_PROPERTIES,
@@ -119,6 +125,7 @@ const booksHandler = async (req, res) => {
     try {
       const { title, description, author, categoryId } = JSON.parse(req.body) ?? {}
 
+      // Update record
       await prisma.book.update({
         where: { id: Number(queryId) },
         data: {
@@ -134,6 +141,8 @@ const booksHandler = async (req, res) => {
         },
       })
 
+      // Once existing book is updated, retrieve the said book as the return result of the update func
+      // Does not return the proeprties we need
       const updatedBook = await prisma.book.findFirst({
         where: { id: Number(queryId) },
         select: BOOK_PROPERTIES,
@@ -152,6 +161,7 @@ const booksHandler = async (req, res) => {
   } else if (req.method === 'DELETE' && queryId) {
     // Deletes existing record on book
     try {
+      // Delete func
       const book = await prisma.book.update({
         where: { id: Number(queryId) },
         data: {
