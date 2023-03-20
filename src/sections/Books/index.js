@@ -13,11 +13,12 @@ const BookFormModal = lazy(() => import('./BookForm.js'))
 
 /**
  * Categories section that manages the viewing, creating and updating of records
- * Should only be viewable by ADMIN role
+ * Should only be viewable by ADMIN role or
+ * Users with assigned categories which will filter books accordingly
  */
 const Books = () => {
   // check session from AuthContext in AuthGate
-  const { session, isUserAdmin } = useContext(AuthContext)
+  const { session, userCategoryIds, isUserAdmin } = useContext(AuthContext)
   const { fetchBooksDashboard } = useContext(DashboardContext)
   // Get all categories set on the categories section
   const { categories } = useContext(CategoryContext)
@@ -36,7 +37,11 @@ const Books = () => {
   const getBooks = useCallback(async () => {
     setLoading(true)
     try {
-      const { data, message, status } = await fetch(PATHS.API.BOOKS()).then((res) => res.json())
+      // Fetch books according to categories of the user and role
+      // If current user role is USER, then we add the categories we want to filter the books with
+      const { data, message, status } = await fetch(
+        isUserAdmin ? PATHS.API.BOOKS() : PATHS.API.BOOKS(encodeURIComponent(userCategoryIds), true)
+      ).then((res) => res.json())
 
       // Set data only if status of response is success
       if (status === ACTION_STATUS.SUCCESS) {
@@ -62,7 +67,7 @@ const Books = () => {
     } finally {
       setLoading(false)
     }
-  }, [setData, setLoading, setMessage])
+  }, [setData, setLoading, setMessage, isUserAdmin, userCategoryIds])
 
   /**
    * Adds the newly added or updated data on existing record to prevent the need or calling API again
@@ -86,8 +91,10 @@ const Books = () => {
       setData((prev) => prev.filter((b) => b.id !== data.id))
     }
 
-    // Refetch dashboard
-    fetchBooksDashboard()
+    // Refetch dashboard only if admin as this component is viewable to the said role only
+    if (isUserAdmin) {
+      fetchBooksDashboard()
+    }
     onExitBookModal()
   }
 
@@ -111,7 +118,9 @@ const Books = () => {
     ;(async () => getBooks())()
   }, [getBooks])
 
-  return isUserAdmin ? (
+  // Even if this is available to both ADMIN and USER
+  // Only render this if session is valid
+  return session ? (
     <Section
       title="Books"
       buttonText="Create new book"
@@ -124,7 +133,7 @@ const Books = () => {
           book={modal.data}
           type={modal.type}
           userId={session.id}
-          categories={categories}
+          categories={(isUserAdmin ? categories : session?.categories ?? []) ?? []}
           onFormSuccess={onFormSuccess}
           onModalClose={onExitBookModal}
         />
@@ -149,9 +158,7 @@ const Books = () => {
         />
       )}
     />
-  ) : (
-    <div />
-  )
+  ) : null
 }
 
 export default Books

@@ -5,7 +5,8 @@ const PATHS = {
 
   API: {
     LOGIN: '/api/login',
-    BOOKS: (id = null) => `/api/books${id ? `/?id=${id}` : ''}`,
+    BOOKS: (id = null, isCategory = false) =>
+      `/api/books${id ? (isCategory ? `/?categories=${id}` : `/?id=${id}`) : ''}`,
     VERIFY: (id) => `/api/whoami/?id=${id}`,
     CATEGORIES: '/api/categories',
     USERS: (id = null) => `/api/users${id ? `/?id=${id}` : ''}`,

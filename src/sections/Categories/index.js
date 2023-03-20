@@ -90,9 +90,7 @@ const Categories = () => {
         </div>
       )}
     />
-  ) : (
-    <div />
-  )
+  ) : null
 }
 
 export default Categories

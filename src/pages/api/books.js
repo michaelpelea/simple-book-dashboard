@@ -28,6 +28,7 @@ const BOOK_PROPERTIES = {
  */
 const booksHandler = async (req, res) => {
   const queryId = req.query?.id
+  const queryCategories = req.query?.categories
   const parsedBody = req.body ? JSON.parse(req.body) : null
 
   if (req.method === 'GET') {
@@ -62,6 +63,20 @@ const booksHandler = async (req, res) => {
             },
           })
         }
+      } else if (queryCategories) {
+        // This block retrieves all book based on categories passed
+        const categories = queryCategories
+          ? decodeURIComponent(queryCategories)
+              .split(',')
+              .map((c) => Number(c))
+          : []
+
+        books = await prisma.book.findMany({
+          where: {
+            categoryId: { in: categories },
+          },
+          select: BOOK_PROPERTIES,
+        })
       } else {
         // Get all books that are not deleted
         books = await prisma.book.findMany({

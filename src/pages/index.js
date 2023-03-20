@@ -12,7 +12,7 @@ import { AuthContext } from '@/components/AuthGate'
 import { PrimaryButton } from '@/components/Buttons'
 
 const HomePage = () => {
-  const { setSession } = useContext(AuthContext)
+  const { setSession, isUserAdmin } = useContext(AuthContext)
   const { push } = useRouter()
 
   // Logouts the user
@@ -34,9 +34,9 @@ const HomePage = () => {
         <div className="flex w-full justify-end">
           <PrimaryButton onClick={onClickLogout} title="Logout" />
         </div>
-        <Dashboard />
-        <Users />
-        <Categories />
+        {isUserAdmin && <Dashboard />}
+        {isUserAdmin && <Users />}
+        {isUserAdmin && <Categories />}
         <Books />
         <div id="modal-portal" />
       </main>

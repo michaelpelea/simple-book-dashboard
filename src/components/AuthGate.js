@@ -55,7 +55,13 @@ const AuthGate = ({ children }) => {
     init()
   }, [pathname])
 
+  // Returns whether the current session is admin or not
   const isUserAdmin = useMemo(() => session?.role === ROLES.ADMIN, [session?.role])
+
+  const mappedUserCategoryIds = useMemo(
+    () => session?.categories.map((c) => c.id),
+    [session?.categories]
+  )
 
   if (loading) {
     return <Spinner size={6} />
@@ -66,7 +72,8 @@ const AuthGate = ({ children }) => {
    * to api. If a session is invalid, the useEffect is responsible on redirecting user to the login route
    */
   return (
-    <AuthContext.Provider value={{ session, isUserAdmin, setSession }}>
+    <AuthContext.Provider
+      value={{ session, isUserAdmin, userCategoryIds: mappedUserCategoryIds ?? [], setSession }}>
       {children}
     </AuthContext.Provider>
   )

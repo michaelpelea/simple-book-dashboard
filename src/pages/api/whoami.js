@@ -27,6 +27,7 @@ const whoAmIHandler = async (req, res) => {
           lastName: true,
           role: true,
           id: true,
+          categories: true,
         },
       })
 

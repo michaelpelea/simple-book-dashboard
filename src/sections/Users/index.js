@@ -137,9 +137,7 @@ const Users = () => {
         />
       )}
     />
-  ) : (
-    <div />
-  )
+  ) : null
 }
 
 export default Users
